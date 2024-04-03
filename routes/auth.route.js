@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 router.post("/signup", async (req, res) => {
-  const { email, password, username } = req.body;
-  if (email === "" || password === "" || username === "") {
+  const { email, password, userName } = req.body;
+  if (email === "" || password === "" || userName === "") {
     res.status(400).json({
-      Errormessage: "Please provide informations on required fields.",
+      ErrorMessage: "Please provide informations on required fields.",
     });
     return;
   }
@@ -17,7 +17,7 @@ router.post("/signup", async (req, res) => {
   if (!emailRegex.test(email)) {
     res
       .status(400)
-      .json({ Errormessage: "Please provide valid email address." });
+      .json({ ErrorMessage: "Please provide valid email address." });
     return;
   }
 
@@ -25,7 +25,7 @@ router.post("/signup", async (req, res) => {
   const pwdRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!pwdRegex.test(password)) {
     res.status(400).json({
-      Errormessage:
+      ErrorMessage:
         "Password must contain at least 6 characters, one number and one uppercase letter.",
     });
   }
@@ -34,7 +34,7 @@ router.post("/signup", async (req, res) => {
     const foundUser = await UserModel.findOne({ email });
     if (foundUser) {
       res.status(403).json({
-        Errormessage: "User already exists. You should want to log in instead.",
+        ErrorMessage: "User already exists. You should want to log in instead.",
       });
     } else {
       const theSalt = bcryptjs.genSaltSync(12);
@@ -60,16 +60,16 @@ router.post("/signup", async (req, res) => {
       if (!foundUser) {
         res
           .status(400)
-          .json({ Errormessage: "User not found, Sign in instead ?" });
+          .json({ ErrorMessage: "User not found, Sign in instead ?" });
       } else {
         const doesPwdMatch = bcryptjs.compareSync(password, foundUser.password);
         if (!doesPwdMatch) {
           res
             .status(400)
-            .json({ Errormessage: "Incorrect email or password." });
+            .json({ ErrorMessage: "Incorrect email or password." });
         } else {
-          const { _id, username } = foundUser;
-          const payload = { _id, username };
+          const { _id, userName } = foundUser;
+          const payload = { _id, userName }; //data you want to save
           const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
             algorithm: "HS256",
           });
@@ -80,8 +80,14 @@ router.post("/signup", async (req, res) => {
       }
     } catch (err) {
       console.log("Error logging in", err);
-      res.status(500).json({ Errormessage: "Failed logging in" });
+      res.status(500).json({ ErrorMessage: "Failed logging in" });
     }
+  });
+
+  /****************************VERIFY ROUTE***************************************/
+  router.get("/verify", isAuthenticated, (req, res) => {
+    console.log("Verify route", req.payload);
+    res.status(200).json(req.payload);
   });
 });
 
