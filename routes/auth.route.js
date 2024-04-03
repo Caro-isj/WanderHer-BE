@@ -8,16 +8,14 @@ router.post("/signup", async (req, res) => {
   const { email, password, userName } = req.body;
   if (email === "" || password === "" || userName === "") {
     res.status(400).json({
-      ErrorMessage: "Please provide informations on required fields.",
+      message: "Please provide informations on required fields.",
     });
     return;
   }
   /**Verify if valid email **/
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(email)) {
-    res
-      .status(400)
-      .json({ ErrorMessage: "Please provide valid email address." });
+    res.status(400).json({ message: "Please provide valid email address." });
     return;
   }
 
@@ -25,7 +23,7 @@ router.post("/signup", async (req, res) => {
   const pwdRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!pwdRegex.test(password)) {
     res.status(400).json({
-      ErrorMessage:
+      message:
         "Password must contain at least 6 characters, one number and one uppercase letter.",
     });
   }
@@ -34,7 +32,7 @@ router.post("/signup", async (req, res) => {
     const foundUser = await UserModel.findOne({ email });
     if (foundUser) {
       res.status(403).json({
-        ErrorMessage: "User already exists. You should want to log in instead.",
+        message: "User already exists. You should want to log in instead.",
       });
     } else {
       const theSalt = bcryptjs.genSaltSync(12);
@@ -58,15 +56,11 @@ router.post("/signup", async (req, res) => {
     try {
       const foundUser = await UserModel.findOne({ email });
       if (!foundUser) {
-        res
-          .status(400)
-          .json({ ErrorMessage: "User not found, Sign in instead ?" });
+        res.status(400).json({ message: "User not found, Sign in instead ?" });
       } else {
         const doesPwdMatch = bcryptjs.compareSync(password, foundUser.password);
         if (!doesPwdMatch) {
-          res
-            .status(400)
-            .json({ ErrorMessage: "Incorrect email or password." });
+          res.status(400).json({ message: "Incorrect email or password." });
         } else {
           const { _id, userName } = foundUser;
           const payload = { _id, userName }; //data you want to save
@@ -80,7 +74,7 @@ router.post("/signup", async (req, res) => {
       }
     } catch (err) {
       console.log("Error logging in", err);
-      res.status(500).json({ ErrorMessage: "Failed logging in" });
+      res.status(500).json({ message: "Failed logging in" });
     }
   });
 

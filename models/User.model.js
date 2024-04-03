@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    userName: String,
+    firstName: String,
+    lastName: String,
     email: {
       type: String,
       required: true,
@@ -20,7 +21,6 @@ const userSchema = new Schema(
     phoneNumber: {
       type: Number,
       unique: true,
-      required: true,
     },
     profilePicture: {
       type: String,
