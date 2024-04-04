@@ -15,6 +15,7 @@ const activitySchema = new Schema({
     type: Array,
     required: true,
   },
+
   host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
   //   rating:
   //   reviews:

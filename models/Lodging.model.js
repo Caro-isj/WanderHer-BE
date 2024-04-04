@@ -29,8 +29,7 @@ const lodgingSchema = new Schema({
     required: true,
   },
   host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
-  //   rating:
-  //   reviews:
+  observations: { type: String },
 });
 
 const Lodging = mongoose.model("Lodging", lodgingSchema);

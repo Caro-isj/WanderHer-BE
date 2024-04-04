@@ -14,8 +14,8 @@ const bookingSchema = new Schema({
   numberOfGuests: { type: Number, required: true, min: 1 },
   price: { type: Number, default: 0 }, //for activities
   bookingStatus: {
-    type: Array,
-    default: ["pending", "confirmed", "cancelled"],
+    type: String,
+    enum: ["pending", "confirmed", "cancelled"],
   },
 });
 
