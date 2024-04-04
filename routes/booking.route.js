@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const BookingModel = require("./models/Booking.model");
+const BookingModel = require("../models/Booking.model");
 
 //BOOKING ROUTES
 
