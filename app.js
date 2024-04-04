@@ -20,16 +20,16 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
-const authRoute = require("./routes/auth.route");
+const authRoute = require("./routes/auth.route"); //OK
 app.use("/auth", authRoute);
 
-const bookingRoutes = require("./routes/booking.route");
+const bookingRoutes = require("./routes/booking.route"); //OK
 app.use("/booking", bookingRoutes);
 
-const lodgingRoutes = require("./routes/lodging.route");
+const lodgingRoutes = require("./routes/lodging.route"); //OK
 app.use("/lodging", lodgingRoutes);
 
-const chatRoutes = require("./routes/chat.route");
+const chatRoutes = require("./routes/chat.route"); //OK
 app.use("/chat", chatRoutes);
 
 const activityRoutes = require("./routes/activity.route");

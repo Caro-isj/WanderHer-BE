@@ -13,7 +13,7 @@ const activitySchema = new Schema({
   price: { type: Number, required: true },
   images: {
     type: Array,
-    required: true,
+    // required: true,
   },
 
   host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },

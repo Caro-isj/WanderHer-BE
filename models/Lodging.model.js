@@ -26,9 +26,8 @@ const lodgingSchema = new Schema({
   maxStay: { type: Number, required: true, min: 1 },
   images: {
     type: Array,
-    required: true,
   },
-  host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
+  // host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
   observations: { type: String },
 });
 

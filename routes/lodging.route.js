@@ -21,7 +21,7 @@ router.get("/", (req, res, next) => {
 router.get("/:lodgingId", (req, res, next) => {
   const { lodgingId } = req.params;
   LodgingModel.findById(lodgingId)
-    .populate("Host")
+    // .populate("Host")
     .then((lodById) => {
       res.status(200).json(lodById);
       // console.log("Got one lodging by the Id", lodById);
@@ -55,7 +55,7 @@ router.delete("/:lodgingId", (req, res, next) => {
   const { lodgingId } = req.params;
   LodgingModel.findByIdAndDelete(lodgingId)
     .then((delLod) => {
-      res.status(200).json(delLod);
+      res.status(200).send();
       console.log("deleted lodging successfully", delLod);
     })
     .catch((error) => {

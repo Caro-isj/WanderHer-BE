@@ -18,7 +18,7 @@ router.get("/:activityId", (req, res, next) => {
   const { activityId } = req.params;
   ActivityModel.findById(activityId)
     .then((foundACtById) => {
-      res.status(200).jason(foundACtById);
+      res.status(200).json(foundACtById);
     })
     .catch((err) => {
       res.status(500).json({ message: "error while retrieving activity", err });
@@ -44,7 +44,7 @@ router.delete("/:activityId", (req, res, next) => {
   const { activityId } = req.params;
   ActivityModel.findByIdAndDelete(activityId)
     .then((deletedActivity) => {
-      res.status(200).json(deletedActivity);
+      res.status(200).send();
       console.log("deleted activity successfully", deletedActivity);
     })
     .catch((error) => {
