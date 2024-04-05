@@ -22,7 +22,7 @@ const userSchema = new Schema(
 
     phoneNumber: {
       type: Number,
-      unique: true,
+     //unique phone number makes it impossible to login without it bc it assumes all are null
     },
     profilePicture: {
       type: String,
