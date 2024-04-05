@@ -2,30 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const hostSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    // trim: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-
-  phoneNumber: {
-    type: Number,
-    unique: true,
-    required: true,
-  },
-  profilePicture: {
-    type: String,
-    required: true,
-    default:
-      "assets/create-pastel-gradient-highlight-covers-for-your-instagram.jpeg",
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   aboutMe: { type: String, required: true },
   location: { type: String, required: true },

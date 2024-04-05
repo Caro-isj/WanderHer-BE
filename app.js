@@ -32,7 +32,7 @@ app.use("/lodging", lodgingRoutes);
 const chatRoutes = require("./routes/chat.route"); //OK
 app.use("/chat", chatRoutes);
 
-const activityRoutes = require("./routes/activity.route");
+const activityRoutes = require("./routes/activity.route"); // OK
 app.use("/activity", activityRoutes);
 
 const userRoutes = require("./routes/user.route");
