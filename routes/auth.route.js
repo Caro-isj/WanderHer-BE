@@ -48,41 +48,40 @@ router.post("/signup", async (req, res) => {
     console.log("Failed signing in", err);
     res.status(500).json({ err });
   }
+});
 
-  /********************************LOGIN***************************************/
+/********************************LOGIN***************************************/
 
-  router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-    try {
-      const foundUser = await UserModel.findOne({ email });
-      if (!foundUser) {
-        res.status(400).json({ message: "User not found, Sign in instead ?" });
+router.post("/login", async (req, res) => {
+  console.log("entrei");
+  const { email, password } = req.body;
+  try {
+    const foundUser = await UserModel.findOne({ email });
+    if (!foundUser) {
+      res.status(400).json({ message: "User not found, Sign in instead ?" });
+    } else {
+      const doesPwdMatch = bcryptjs.compareSync(password, foundUser.password);
+      if (!doesPwdMatch) {
+        res.status(400).json({ message: "Incorrect email or password." });
       } else {
-        const doesPwdMatch = bcryptjs.compareSync(password, foundUser.password);
-        if (!doesPwdMatch) {
-          res.status(400).json({ message: "Incorrect email or password." });
-        } else {
-          const { _id, userName } = foundUser;
-          const payload = { _id, userName }; //data you want to save
-          const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-            algorithm: "HS256",
-          });
-          res
-            .status(200)
-            .json({ message: "Successfully logged in", authToken });
-        }
+        const { _id, userName } = foundUser;
+        const payload = { _id, userName }; //data you want to save
+        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+          algorithm: "HS256",
+        });
+        res.status(200).json({ message: "Successfully logged in", authToken });
       }
-    } catch (err) {
-      console.log("Error logging in", err);
-      res.status(500).json({ message: "Failed logging in" });
     }
-  });
+  } catch (err) {
+    console.log("Error logging in", err);
+    res.status(500).json({ message: "Failed logging in" });
+  }
+});
 
-  /****************************VERIFY ROUTE***************************************/
-  router.get("/verify", isAuthenticated, (req, res) => {
-    console.log("Verify route", req.payload);
-    res.status(200).json(req.payload);
-  });
+/****************************VERIFY ROUTE***************************************/
+router.get("/verify", isAuthenticated, (req, res) => {
+  console.log("Verify route", req.payload);
+  res.status(200).json(req.payload);
 });
 
 module.exports = router;
