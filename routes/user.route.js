@@ -57,12 +57,24 @@ router.get("/:hostId", (req, res, next) => {
 router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
   const userId = req.params.userId;
   // Get other user profile data from request body
-  const { userName, firstName, lastName, email, phoneNumber } = req.body;
+  const {
+    userName,
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    aboutMe,
+    location,
+    age,
+    occupation,
+    languages,
+  } = req.body;
 
-  // Get the path of the uploaded profile picture
-  const profilePicturePath = req.file.path;
+  // path of the uploaded profile picture
+  const profilePicturePath = req.file?.path;
 
-  // Update user profile in the database
+  //conditional para age- si el usuario llena la info mostrarla, si no lo hace poner "0" para que no de undefined
+
   UserModel.findByIdAndUpdate(
     userId,
     {
@@ -73,13 +85,18 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
         email,
         phoneNumber,
         profilePicture: profilePicturePath,
+        aboutMe,
+        location,
+        age,
+        occupation,
+        languages,
       },
     },
     { new: true }
   )
     .then((updatedUser) => {
       console.log("User profile updated successfully:", updatedUser);
-      res.status(201).json({ message: "Updated user info" });
+      res.status(200).json({ message: "Updated user info" });
     })
     .catch((error) => {
       console.error("Error updating user profile:", error);
