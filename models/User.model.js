@@ -28,6 +28,20 @@ const userSchema = new Schema(
       type: String,
       default: "assets/profilepic.png",
     },
+    aboutMe: { type: String, required: true },
+    location: { type: String, required: true },
+    languages: {
+      type: Array,
+      default: [
+        "English",
+        "Spanish",
+        "French",
+        "German",
+        "Portuguese",
+        "Dutch",
+        "Other",
+      ],
+    },
   }
   // {
   //   // this second object adds extra properties: `createdAt` and `updatedAt`

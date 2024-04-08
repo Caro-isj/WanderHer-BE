@@ -11,12 +11,13 @@ const activitySchema = new Schema({
   startTime: { type: Date, required: true, default: Date.now },
   endTime: { type: Date, required: true, default: Date.now },
   price: { type: Number, required: true },
+  thumbnail: String,
   images: {
     type: Array,
     // required: true,
   },
 
-  host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
+  host: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   //   rating:
   //   reviews:
 });

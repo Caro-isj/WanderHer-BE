@@ -1,9 +1,11 @@
 const router = require("express").Router();
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 const ActivityModel = require("../models/Activity.model");
 
 //get activities
 router.get("/", (req, res, next) => {
   ActivityModel.find({})
+    .populate({ path: "host", select: "-password" })
     .then((activity) => {
       res.json(activity);
     })
@@ -17,6 +19,7 @@ router.get("/", (req, res, next) => {
 router.get("/:activityId", (req, res, next) => {
   const { activityId } = req.params;
   ActivityModel.findById(activityId)
+    .populate({ path: "host", select: "-password" })
     .then((foundACtById) => {
       res.status(200).json(foundACtById);
     })
@@ -27,8 +30,9 @@ router.get("/:activityId", (req, res, next) => {
 });
 
 // post activity
-router.post("/", (req, res, next) => {
-  ActivityModel.create(req.body)
+router.post("/", isAuthenticated, (req, res, next) => {
+  const activity = { ...req.body, host: req.payload._id };
+  ActivityModel.create(activity)
     .then((newActivity) => {
       res.json({ newActivity, message: "activity created successfully" });
     })
