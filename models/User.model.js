@@ -26,8 +26,7 @@ const userSchema = new Schema(
     },
     profilePicture: {
       type: String,
-      default:
-        "assets/create-pastel-gradient-highlight-covers-for-your-instagram.jpeg",
+      default: "assets/profilepic.png",
     },
   }
   // {

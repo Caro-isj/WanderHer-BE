@@ -2,6 +2,8 @@ const router = require("express").Router();
 const HostModel = require("../models/Host.model");
 const UserModel = require("../models/User.model");
 
+const uploader = require("../middleware/cloudinary.config");
+
 //so we will be able to search for a host ? or only available if you click on his profile on lodging details
 //i've only seen it after clicking profile on airbnb. we could start with that -agreed -:D
 
@@ -35,18 +37,53 @@ router.get("/:hostId", (req, res, next) => {
     });
 });
 
-//update USER profile
-router.put("/", (req, res, next) => {
-  const { email } = req.body;
-  UserModel.findOneAndUpdate({ email }, req.body, { new: true })
-    .then((user) => {
-      console.log("Updating user's info ->", user);
-      res.status(201).json(user);
+//update USER profile  ---  not sure how to make it work with findone
+
+// router.put("/", (req, res, next) => {
+//   const { email } = req.body;
+//   UserModel.findOneAndUpdate({ email }, req.body, { new: true })
+//     .then((user) => {
+//       console.log("Updating user's info ->", user);
+//       res.status(201).json(user);
+//     })
+//     .catch((err) => {
+//       console.log("Error while updating the user info ->", err);
+//       res.status(500).json({ message: "Failed updating your profile" });
+//       next(err);
+//     });
+// });
+
+// Update user profile route
+router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
+  const userId = req.params.userId;
+  // Get other user profile data from request body
+  const { userName, firstName, lastName, email, phoneNumber } = req.body;
+
+  // Get the path of the uploaded profile picture
+  const profilePicturePath = req.file.path;
+
+  // Update user profile in the database
+  UserModel.findByIdAndUpdate(
+    userId,
+    {
+      $set: {
+        userName,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        profilePicture: profilePicturePath,
+      },
+    },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      console.log("User profile updated successfully:", updatedUser);
+      res.status(201).json({ message: "Updated user info" });
     })
-    .catch((err) => {
-      console.log("Error while updating the user info ->", err);
+    .catch((error) => {
+      console.error("Error updating user profile:", error);
       res.status(500).json({ message: "Failed updating your profile" });
-      next(err);
     });
 });
 
