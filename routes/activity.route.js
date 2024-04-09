@@ -33,6 +33,7 @@ router.get("/:activityId", (req, res, next) => {
 router.post("/", isAuthenticated, (req, res, next) => {
   const activity = { ...req.body, host: req.payload._id };
   ActivityModel.create(activity)
+    .populate({ path: "host", select: "-password" })
     .then((newActivity) => {
       res.json({ newActivity, message: "activity created successfully" });
     })

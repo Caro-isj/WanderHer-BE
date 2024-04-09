@@ -38,6 +38,9 @@ app.use("/activity", activityRoutes);
 const userRoutes = require("./routes/user.route");
 app.use("/user", userRoutes);
 
+const dashboardRoutes = require("./routes/dashboard.route");
+app.use("/dashboard", dashboardRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
