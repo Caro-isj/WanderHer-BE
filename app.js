@@ -41,6 +41,9 @@ app.use("/user", userRoutes);
 const dashboardRoutes = require("./routes/dashboard.route");
 app.use("/dashboard", dashboardRoutes);
 
+const reviewRoutes = require("./routes/review.route");
+app.use("/review", reviewRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
