@@ -22,20 +22,20 @@ router.get("/:userId", (req, res, next) => {
     });
 });
 
-//Get HOST details
-router.get("/:hostId", (req, res, next) => {
-  const { hostId } = req.params;
-  HostModel.findById(hostId)
-    .then((hostById) => {
-      console.log("Found host by id", hostById);
-      res.status(200).json(hostById);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: "Failed finding host by id" });
-      next(err);
-    });
-});
+// //Get HOST details
+// router.get("/:hostId", (req, res, next) => {
+//   const { hostId } = req.params;
+//   HostModel.findById(hostId)
+//     .then((hostById) => {
+//       console.log("Found host by id", hostById);
+//       res.status(200).json(hostById);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json({ message: "Failed finding host by id" });
+//       next(err);
+//     });
+// });
 
 //update USER profile  ---  not sure how to make it work with findone
 
