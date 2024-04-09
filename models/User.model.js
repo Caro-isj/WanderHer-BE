@@ -8,7 +8,6 @@ const userSchema = new Schema(
     lastName: { type: String },
     email: {
       type: String,
-      required: true,
       required: [true, "Email is required."],
       unique: true,
       lowercase: true,
@@ -31,8 +30,8 @@ const userSchema = new Schema(
     age: { type: Number }, //later: change it to birthday and calculate age according to that
     occupation: { type: String },
     languages: {
-      type: Array,
-      default: [
+      type: [String],
+      enum: [
         "English",
         "Spanish",
         "French",
