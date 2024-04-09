@@ -29,6 +29,8 @@ const lodgingSchema = new Schema({
   },
   // host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
   observations: { type: String },
+  latitude: { type: Number},
+  longitude: { type: Number},
 });
 
 const Lodging = mongoose.model("Lodging", lodgingSchema);
