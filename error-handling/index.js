@@ -4,6 +4,7 @@ module.exports = (app) => {
     res.status(404).json({ message: "This route does not exist" });
   });
 
+  //if anything goes wrong in the express app
   app.use((err, req, res, next) => {
     // whenever you call next(err), this middleware will handle the error
     // always logs the error
@@ -11,11 +12,9 @@ module.exports = (app) => {
 
     // only render if the error ocurred before sending the response
     if (!res.headersSent) {
-      res
-        .status(500)
-        .json({
-          message: "Internal server error. Check the server console",
-        });
+      res.status(500).json({
+        message: "Internal server error. Check the server console",
+      });
     }
   });
 };
