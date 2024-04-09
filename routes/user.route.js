@@ -1,11 +1,24 @@
 const router = require("express").Router();
-const HostModel = require("../models/Host.model");
+// const HostModel = require("../models/Host.model");
 const UserModel = require("../models/User.model");
 
 const uploader = require("../middleware/cloudinary.config");
 
 //so we will be able to search for a host ? or only available if you click on his profile on lodging details
 //i've only seen it after clicking profile on airbnb. we could start with that -agreed -:D
+
+//get all USER
+router.get("/", (req, res, next) => {
+  UserModel.find({})
+    .then((allUser) => {
+      console.log("Found users ->", allUser);
+      res.status(200).json(allUser);
+    })
+    .catch((err) => {
+      console.log("Didn't found all users ->", err);
+      res.status(500).json({ message: "Failed to get all users" });
+    });
+});
 
 //Get USER details
 router.get("/:userId", (req, res, next) => {
