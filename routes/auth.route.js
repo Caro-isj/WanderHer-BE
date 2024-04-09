@@ -26,6 +26,7 @@ router.post("/signup", async (req, res) => {
       message:
         "Password must contain at least 6 characters, one number and one uppercase letter.",
     });
+    return;
   }
   try {
     /**If user already exists **/
