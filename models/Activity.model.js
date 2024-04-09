@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const activitySchema = new Schema({
-  title: { type: String, required: true, unique: true },
-  description: { type: String, required: true, unique: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
   location: { type: String, required: true },
   meetingPoint: { type: String, required: true },
   capacity: { type: Number, required: true, min: 1 },
@@ -18,6 +18,8 @@ const activitySchema = new Schema({
   },
 
   host: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  latitude: { type: Number },
+  longitude: { type: Number },
   //   rating:
   //   reviews:
 });
