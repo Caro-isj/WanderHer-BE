@@ -4,7 +4,7 @@ const LodgingModel = require("../models/Lodging.model");
 const UserModel = require("../models/User.model");
 
 //Get all ACTIVITY
-router.get("/", (req, res, next) => {
+router.get("/activities", (req, res, next) => {
   ActivityModel.find({})
     .populate({ path: "host", select: "-password" })
     .then((activity) => {
@@ -17,7 +17,7 @@ router.get("/", (req, res, next) => {
 });
 
 //get all USER
-router.get("/", (req, res, next) => {
+router.get("/users", (req, res, next) => {
   UserModel.find({})
     .then((allUser) => {
       console.log("Found users ->", allUser);
@@ -30,7 +30,7 @@ router.get("/", (req, res, next) => {
 });
 
 //get all LODGING
-router.get("/", (req, res, next) => {
+router.get("/lodgings", (req, res, next) => {
   LodgingModel.find({})
     .then((lodgings) => {
       //   console.log("lodgings retrieved", lodgings);
