@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const lodgingSchema = new Schema({
+
   title: { type: String, required: true, unique: true },
   description: { type: String, required: true, unique: true },
   location: { type: String, required: true },
@@ -58,7 +59,7 @@ const lodgingSchema = new Schema({
   images: {
     type: Array,
   },
-  // host: { type: mongoose.Schema.Types.ObjectId, ref: "Host" },
+  host: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   observations: { type: String },
   latitude: { type: Number},
   longitude: { type: Number},
