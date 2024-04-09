@@ -18,6 +18,8 @@ const activitySchema = new Schema({
   },
 
   host: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  latitude: { type: Number },
+  longitude: { type: Number },
   //   rating:
   //   reviews:
 });
