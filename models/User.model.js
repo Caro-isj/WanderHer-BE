@@ -53,30 +53,3 @@ const userSchema = new Schema(
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
-
-// HOW TO ADD LOCATION - to add that later
-
-// const GeoSchema = mongoose.Schema({
-//   type: {
-//     type: String,
-//     default: "Point",
-//   },
-//   coordinates: {
-//     type: [Number], //the type is an array of numbers
-//     index: "2dsphere"
-//   }
-// })
-
-// const EventSchema = mongoose.Schema({
-//   name: String,
-//   creator: String,
-//   location: GeoSchema
-// })
-
-// And when entering data:
-
-// Event({
-//       name,
-//       creator,
-//       location: { type: "point", coordinates: [longitude, latitude] }
-//     })
