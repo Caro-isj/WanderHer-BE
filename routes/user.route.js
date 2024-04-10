@@ -29,7 +29,7 @@ router.get("/:userId", (req, res, next) => {
     // .populate({ path: "activities" })
     // .populate({ path: "lodgings" })
     .then((userId) => {
-      console.log("Found user by id ->", userId);
+      // console.log("Found user by id ->", userId);
       res.status(200).json(userId);
     })
     .catch((err) => {
@@ -90,24 +90,26 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
   // path of the uploaded profile picture
   const profilePicturePath = req.file?.path;
 
+  console.log(req.body, req.file);
   //conditional para age- si el usuario llena la info mostrarla, si no lo hace poner "0" para que no de undefined
+
+  const newLanguage = Array.from(new Set(languages.split(",")));
+  console.log("new language:", newLanguage);
 
   UserModel.findByIdAndUpdate(
     userId,
     {
-      $set: {
-        userName,
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        profilePicture: profilePicturePath,
-        aboutMe,
-        location,
-        age,
-        occupation,
-        languages,
-      },
+      userName,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      profilePicture: profilePicturePath,
+      aboutMe,
+      location,
+      age,
+      occupation,
+      languages: newLanguage,
     },
     { new: true }
   )
@@ -121,24 +123,10 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
     });
 });
 
-//delete your account
-// router.delete("/", (req, res, next) => {
-//   const { email } = req.body;
-//   UserModel.findOneAndDelete({ email })
-//     .then((deletedUser) => {
-//       console.log("Successfully deleted your account ->", deletedUser);
-//       res.status(200).send();
-//     })
-//     .catch((err) => {
-//       console.log("Error deleting your account ->", err);
-//       res.status(500).json({ message: "Failed deleting your account" });
-//       next(err);
-//     });
-// });
-
-router.delete("/:userId", (req, res, next) => {
+delete your account
+router.delete("/", (req, res, next) => {
   const { email } = req.body;
-  UserModel.findByIdAndDelete({ email })
+  UserModel.findOneAndDelete({ email })
     .then((deletedUser) => {
       console.log("Successfully deleted your account ->", deletedUser);
       res.status(200).send();
@@ -149,5 +137,19 @@ router.delete("/:userId", (req, res, next) => {
       next(err);
     });
 });
+
+// router.delete("/:userId", (req, res, next) => {
+//   const { email } = req.body;
+//   UserModel.findByIdAndDelete({ email })
+//     .then((deletedUser) => {
+//       console.log("Successfully deleted your account ->", deletedUser);
+//       res.status(200).send();
+//     })
+//     .catch((err) => {
+//       console.log("Error deleting your account ->", err);
+//       res.status(500).json({ message: "Failed deleting your account" });
+//       next(err);
+//     });
+// });
 
 module.exports = router;
