@@ -123,7 +123,7 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
     });
 });
 
-delete your account
+// delete your account
 router.delete("/", (req, res, next) => {
   const { email } = req.body;
   UserModel.findOneAndDelete({ email })
