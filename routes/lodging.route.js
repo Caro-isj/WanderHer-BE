@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const LodgingModel = require("../models/Lodging.model");
 const uploader = require("../middleware/cloudinary.config.js");
+const UserModel = require("../models/User.model");
 
 //get lodgings
 
@@ -57,6 +58,7 @@ router.post("/", uploader.single("images"), (req, res, next) => {
 
   LodgingModel.create(req.body)
     .then((newLod) => {
+      //   console.log("new lodging added", newLod);
       res.json({ newLod, message: "Your lodging was created!" });
     })
     .catch((err) => {
