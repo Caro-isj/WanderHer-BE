@@ -16,6 +16,21 @@ router.get("/", (req, res, next) => {
     });
 });
 
+// get review by lodging id
+router.get("/:lodgingId", (req, res, next) => {
+  const { lodgingId } = req.params;
+  ReviewModel.find({ property: lodgingId })
+    .then((reviews) => {
+      console.log("here are all the reviews", reviews);
+      res.json(reviews);
+    })
+    .catch((error) => {
+      console.log("error while fetching reviews", error);
+      res.status(500).json({ message: "failed to retrieve reviews", error });
+      next(error);
+    });
+});
+
 //post review
 router.post("/", (req, res, next) => {
   ReviewModel.create(req.body)
