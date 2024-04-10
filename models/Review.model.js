@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const reviewSchema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   property: { type: mongoose.Schema.Types.ObjectId, ref: "Lodging" },
+  activity: { type: mongoose.Schema.Types.ObjectId, ref: "Activity" },
   title: { type: String },
   comment: { type: String },
   rating: { type: Number, enum: [1, 2, 3, 4, 5] },
