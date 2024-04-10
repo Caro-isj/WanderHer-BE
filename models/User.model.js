@@ -23,7 +23,7 @@ const userSchema = new Schema(
     },
     profilePicture: {
       type: String,
-      default: "assets/profilepic.png",
+      // default: "assets/profilepic.png",
     },
     aboutMe: { type: String },
     location: { type: String },
@@ -41,8 +41,12 @@ const userSchema = new Schema(
         "Other",
       ],
     },
-    //add years hosting, lodgings, reviews and activities for hosts
+    //for hosts:
+    // lodgings: { type: mongoose.Schema.Types.ObjectId, ref: "lodgings" },
+    // activities: { type: mongoose.Schema.Types.ObjectId, ref: "activities" },
+    // reviews: { type: mongoose.Schema.Types.ObjectId, ref: "reviews" },
   }
+  //add years hosting using timestamps?
   // {
   //   // this second object adds extra properties: `createdAt` and `updatedAt`
   //   timestamps: true,

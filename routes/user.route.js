@@ -10,6 +10,8 @@ const uploader = require("../middleware/cloudinary.config");
 //get all USER
 router.get("/", (req, res, next) => {
   UserModel.find({})
+    // .populate({ path: "activities" })
+    // .populate({ path: "lodgings" })
     .then((allUser) => {
       console.log("Found users ->", allUser);
       res.status(200).json(allUser);
@@ -24,6 +26,8 @@ router.get("/", (req, res, next) => {
 router.get("/:userId", (req, res, next) => {
   const { userId } = req.params;
   UserModel.findById(userId)
+    // .populate({ path: "activities" })
+    // .populate({ path: "lodgings" })
     .then((userId) => {
       console.log("Found user by id ->", userId);
       res.status(200).json(userId);
@@ -118,9 +122,23 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
 });
 
 //delete your account
-router.delete("/", (req, res, next) => {
+// router.delete("/", (req, res, next) => {
+//   const { email } = req.body;
+//   UserModel.findOneAndDelete({ email })
+//     .then((deletedUser) => {
+//       console.log("Successfully deleted your account ->", deletedUser);
+//       res.status(200).send();
+//     })
+//     .catch((err) => {
+//       console.log("Error deleting your account ->", err);
+//       res.status(500).json({ message: "Failed deleting your account" });
+//       next(err);
+//     });
+// });
+
+router.delete("/:userId", (req, res, next) => {
   const { email } = req.body;
-  UserModel.findOneAndDelete({ email })
+  UserModel.findByIdAndDelete({ email })
     .then((deletedUser) => {
       console.log("Successfully deleted your account ->", deletedUser);
       res.status(200).send();
