@@ -22,7 +22,6 @@ router.get("/", (req, res, next) => {
 router.get("/:lodgingId", (req, res, next) => {
   const { lodgingId } = req.params;
   LodgingModel.findById(lodgingId)
-    // .populate("Host")
     .then((lodById) => {
       res.status(200).json(lodById);
     })
@@ -31,6 +30,22 @@ router.get("/:lodgingId", (req, res, next) => {
         .status(500)
         .json({ message: "error while retrieving lodging by the Id", err });
       console.log("error while retrieving lodging by the Id", err);
+      next(err);
+    });
+});
+
+// get lodging by host/user id
+router.get("/host/:hostId", (req, res, next) => {
+  const { hostId } = req.params;
+  LodgingModel.find({host: hostId})
+    .then((lodById) => {
+      res.status(200).json(lodById);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ message: "error while retrieving lodging by the host Id", err });
+      console.log("error while retrieving lodging by the host Id", err);
       next(err);
     });
 });
