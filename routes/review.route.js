@@ -30,6 +30,23 @@ router.get("/:lodgingId", (req, res, next) => {
     });
 });
 
+//get review by activity id
+router.get("/:activityId", (req, res, next) => {
+  const { activityId } = req.params;
+  ReviewModel.find({ activity: activityId })
+    .then((reviews) => {
+      console.log("Here is all the reviews ->", reviews);
+      res.status(201).json(reviews);
+    })
+    .catch((err) => {
+      console.log("Error fetching the reviews ->", err);
+      res
+        .status(500)
+        .json({ message: "Failed fetching reviews from activity by id", err });
+      next(err);
+    });
+});
+
 //post review
 router.post("/", (req, res, next) => {
   ReviewModel.create(req.body)
