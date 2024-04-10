@@ -39,10 +39,8 @@ const userSchema = new Schema(
         "Other",
       ],
     },
-    //for hosts:
-    // lodgings: { type: mongoose.Schema.Types.ObjectId, ref: "lodgings" },
-    // activities: { type: mongoose.Schema.Types.ObjectId, ref: "activities" },
-    // reviews: { type: mongoose.Schema.Types.ObjectId, ref: "reviews" },
+    lodgings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Lodging" }],
+    activities: [{ type: mongoose.Schema.Types.ObjectId, ref: "Activity" }],
   }
   //add years hosting using timestamps?
   // {

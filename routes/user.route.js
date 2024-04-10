@@ -6,7 +6,8 @@ const uploader = require("../middleware/cloudinary.config");
 //get all USER
 router.get("/", (req, res, next) => {
   UserModel.find({})
-    // .populate({ path: "activities" })
+
+    .populate({ path: "activities" })
     // .populate({ path: "lodgings" })
     .then((allUser) => {
       console.log("Found users ->", allUser);
@@ -22,10 +23,10 @@ router.get("/", (req, res, next) => {
 router.get("/:userId", (req, res, next) => {
   const { userId } = req.params;
   UserModel.findById(userId)
-    // .populate({ path: "activities" })
+    .populate({ path: "activities" })
     // .populate({ path: "lodgings" })
     .then((userId) => {
-      // console.log("Found user by id ->", userId);
+      console.log("Found user by id ->", userId);
       res.status(200).json(userId);
     })
     .catch((err) => {
@@ -34,22 +35,6 @@ router.get("/:userId", (req, res, next) => {
       next(err);
     });
 });
-
-//update USER profile  ---  not sure how to make it work with findone
-
-// router.put("/", (req, res, next) => {
-//   const { email } = req.body;
-//   UserModel.findOneAndUpdate({ email }, req.body, { new: true })
-//     .then((user) => {
-//       console.log("Updating user's info ->", user);
-//       res.status(201).json(user);
-//     })
-//     .catch((err) => {
-//       console.log("Error while updating the user info ->", err);
-//       res.status(500).json({ message: "Failed updating your profile" });
-//       next(err);
-//     });
-// });
 
 // Update user profile route
 router.put("/:userId", uploader.single("profilePicture"), (req, res) => {

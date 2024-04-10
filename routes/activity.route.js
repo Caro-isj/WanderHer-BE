@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 const ActivityModel = require("../models/Activity.model");
-
+const UserModel = require("../models/User.model");
 //get activities
 router.get("/", (req, res, next) => {
   ActivityModel.find({})
@@ -34,7 +34,15 @@ router.post("/", isAuthenticated, (req, res, next) => {
   const activity = { ...req.body, host: req.payload._id };
   ActivityModel.create(activity)
     .then((newActivity) => {
-      res.json({ newActivity, message: "activity created successfully" });
+      return UserModel.findByIdAndUpdate(
+        req.payload._id,
+        { $push: { activities: newActivity._id } },
+        { new: true }
+      ).populate("activities");
+    })
+    .then((updatedUser) => {
+      console.log(updatedUser);
+      res.json({ updatedUser, message: "user updated" });
     })
     .catch((error) => {
       res.status(500).json({ message: "error while loading activity" });
