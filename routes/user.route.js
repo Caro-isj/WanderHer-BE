@@ -90,11 +90,12 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
   // path of the uploaded profile picture
   const profilePicturePath = req.file?.path;
 
-  console.log(req.body, req.file);
+  // console.log(req.body, req.file);
+
   //conditional para age- si el usuario llena la info mostrarla, si no lo hace poner "0" para que no de undefined
 
   const newLanguage = Array.from(new Set(languages.split(",")));
-  console.log("new language:", newLanguage);
+  // console.log("new language:", newLanguage);
 
   UserModel.findByIdAndUpdate(
     userId,
@@ -124,23 +125,9 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
 });
 
 // delete your account
-router.delete("/", (req, res, next) => {
-  const { email } = req.body;
-  UserModel.findOneAndDelete({ email })
-    .then((deletedUser) => {
-      console.log("Successfully deleted your account ->", deletedUser);
-      res.status(200).send();
-    })
-    .catch((err) => {
-      console.log("Error deleting your account ->", err);
-      res.status(500).json({ message: "Failed deleting your account" });
-      next(err);
-    });
-});
-
-// router.delete("/:userId", (req, res, next) => {
+// router.delete("/", (req, res, next) => {
 //   const { email } = req.body;
-//   UserModel.findByIdAndDelete({ email })
+//   UserModel.findOneAndDelete({ email })
 //     .then((deletedUser) => {
 //       console.log("Successfully deleted your account ->", deletedUser);
 //       res.status(200).send();
@@ -151,5 +138,19 @@ router.delete("/", (req, res, next) => {
 //       next(err);
 //     });
 // });
+
+router.delete("/:userId", (req, res, next) => {
+  const { userId } = req.params;
+  UserModel.findByIdAndDelete(userId)
+    .then((deletedUser) => {
+      res.status(204).send();
+      console.log("Successfully deleted your account", deletedUser);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed deleting your account", err });
+      console.log("Error deleting your account", err);
+      next(err);
+    });
+});
 
 module.exports = router;
