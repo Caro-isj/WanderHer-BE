@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
   UserModel.find({})
 
     .populate({ path: "activities" })
-    // .populate({ path: "lodgings" })
+    .populate({ path: "lodgings" })
     .then((allUser) => {
       console.log("Found users ->", allUser);
       res.status(200).json(allUser);
@@ -24,7 +24,7 @@ router.get("/:userId", (req, res, next) => {
   const { userId } = req.params;
   UserModel.findById(userId)
     .populate({ path: "activities" })
-    // .populate({ path: "lodgings" })
+    .populate({ path: "lodgings" })
     .then((userId) => {
       console.log("Found user by id ->", userId);
       res.status(200).json(userId);
@@ -61,6 +61,7 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
   //conditional para age- si el usuario llena la info mostrarla, si no lo hace poner "0" para que no de undefined
 
   const newLanguage = Array.from(new Set(languages.split(",")));
+
   // console.log("new language:", newLanguage);
 
   UserModel.findByIdAndUpdate(

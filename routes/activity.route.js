@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 const ActivityModel = require("../models/Activity.model");
 const UserModel = require("../models/User.model");
+
 //get activities
 router.get("/", (req, res, next) => {
   ActivityModel.find({})
