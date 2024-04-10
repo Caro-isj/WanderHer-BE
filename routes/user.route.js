@@ -1,11 +1,7 @@
 const router = require("express").Router();
-// const HostModel = require("../models/Host.model");
 const UserModel = require("../models/User.model");
 
 const uploader = require("../middleware/cloudinary.config");
-
-//so we will be able to search for a host ? or only available if you click on his profile on lodging details
-//i've only seen it after clicking profile on airbnb. we could start with that -agreed -:D
 
 //get all USER
 router.get("/", (req, res, next) => {
@@ -38,21 +34,6 @@ router.get("/:userId", (req, res, next) => {
       next(err);
     });
 });
-
-// //Get HOST details
-// router.get("/:hostId", (req, res, next) => {
-//   const { hostId } = req.params;
-//   HostModel.findById(hostId)
-//     .then((hostById) => {
-//       console.log("Found host by id", hostById);
-//       res.status(200).json(hostById);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json({ message: "Failed finding host by id" });
-//       next(err);
-//     });
-// });
 
 //update USER profile  ---  not sure how to make it work with findone
 
@@ -127,7 +108,7 @@ router.put("/:userId", uploader.single("profilePicture"), (req, res) => {
 // delete your account
 // router.delete("/", (req, res, next) => {
 //   const { email } = req.body;
-//   UserModel.findOneAndDelete({ email })
+//   UserModel.findByIdAndDelete({ email }) -A : if you want to use the email it should be findOneAndDelete I guess my little Caro
 //     .then((deletedUser) => {
 //       console.log("Successfully deleted your account ->", deletedUser);
 //       res.status(200).send();

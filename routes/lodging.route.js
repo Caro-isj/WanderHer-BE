@@ -25,7 +25,6 @@ router.get("/:lodgingId", (req, res, next) => {
     // .populate("Host")
     .then((lodById) => {
       res.status(200).json(lodById);
-      // console.log("Got one lodging by the Id", lodById);
     })
     .catch((err) => {
       res
@@ -43,7 +42,6 @@ router.post("/", uploader.single("images"), (req, res, next) => {
 
   LodgingModel.create(req.body)
     .then((newLod) => {
-      //   console.log("new lodging added", newLod);
       res.json({ newLod, message: "Your lodging was created!" });
     })
     .catch((err) => {

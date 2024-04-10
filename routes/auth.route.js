@@ -12,14 +12,14 @@ router.post("/signup", async (req, res) => {
     });
     return;
   }
-  /**Verify if valid email **/
+  /********************Verify if valid email************************/
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(email)) {
     res.status(400).json({ message: "Please provide valid email address." });
     return;
   }
 
-  /**Verify strong pwd **/
+  /*************************Verify strong pwd*************************/
   const pwdRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!pwdRegex.test(password)) {
     res.status(400).json({
@@ -29,7 +29,7 @@ router.post("/signup", async (req, res) => {
     return;
   }
   try {
-    /**If user already exists **/
+    /*********************If user already exists**********************/
     const foundUser = await UserModel.findOne({ email });
     if (foundUser) {
       res.status(403).json({

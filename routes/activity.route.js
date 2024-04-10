@@ -20,8 +20,8 @@ router.get("/:activityId", (req, res, next) => {
   const { activityId } = req.params;
   ActivityModel.findById(activityId)
     .populate({ path: "host", select: "-password" })
-    .then((foundACtById) => {
-      res.status(200).json(foundACtById);
+    .then((foundActById) => {
+      res.status(200).json(foundActById);
     })
     .catch((err) => {
       res.status(500).json({ message: "error while retrieving activity", err });
@@ -33,7 +33,6 @@ router.get("/:activityId", (req, res, next) => {
 router.post("/", isAuthenticated, (req, res, next) => {
   const activity = { ...req.body, host: req.payload._id };
   ActivityModel.create(activity)
-    // .populate({ path: "host", select: "-password" })
     .then((newActivity) => {
       res.json({ newActivity, message: "activity created successfully" });
     })
@@ -59,7 +58,6 @@ router.delete("/:activityId", (req, res, next) => {
 });
 
 //update activity
-
 router.put("/:activityId", (req, res, next) => {
   const { activityId } = req.params;
   ActivityModel.findByIdAndUpdate(activityId, req.body, { new: true })
