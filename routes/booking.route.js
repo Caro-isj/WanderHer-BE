@@ -18,7 +18,6 @@ router.post("/", (req, res, next) => {
 });
 
 // get reservation by id
-
 router.get("/:bookingId", (req, res, next) => {
   const { bookingId } = req.params;
   BookingModel.findById(bookingId)
@@ -34,7 +33,6 @@ router.get("/:bookingId", (req, res, next) => {
 });
 
 //update a reservation
-
 router.put("/:bookingId", (req, res, next) => {
   const { bookingId } = req.params;
   BookingModel.findByIdAndUpdate(bookingId, req.body, { new: true })
@@ -50,7 +48,6 @@ router.put("/:bookingId", (req, res, next) => {
 });
 
 //delete a reservation
-
 router.delete("/:bookingId", (req, res, next) => {
   const { bookingId } = req.params;
   BookingModel.findByIdAndDelete(bookingId)

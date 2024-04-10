@@ -2,7 +2,6 @@ const router = require("express").Router();
 const ReviewModel = require("../models/Review.model");
 
 //get review list
-
 router.get("/", (req, res, next) => {
   ReviewModel.find({})
     .then((reviews) => {

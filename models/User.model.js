@@ -19,11 +19,9 @@ const userSchema = new Schema(
 
     phoneNumber: {
       type: Number,
-      //unique phone number makes it impossible to login without it bc it assumes all are null
     },
     profilePicture: {
       type: String,
-      // default: "assets/profilepic.png",
     },
     aboutMe: { type: String },
     location: { type: String },

@@ -33,7 +33,6 @@ router.get("/users", (req, res, next) => {
 router.get("/lodgings", (req, res, next) => {
   LodgingModel.find({})
     .then((lodgings) => {
-      //   console.log("lodgings retrieved", lodgings);
       res.json(lodgings);
     })
     .catch((err) => {
