@@ -38,14 +38,15 @@ router.get("/:lodgingId", (req, res, next) => {
 // get lodging by host/user id
 router.get("/host/:hostId", (req, res, next) => {
   const { hostId } = req.params;
-  LodgingModel.find({host: hostId})
+  LodgingModel.find({ host: hostId })
     .then((lodById) => {
       res.status(200).json(lodById);
     })
     .catch((err) => {
-      res
-        .status(500)
-        .json({ message: "error while retrieving lodging by the host Id", err });
+      res.status(500).json({
+        message: "error while retrieving lodging by the host Id",
+        err,
+      });
       console.log("error while retrieving lodging by the host Id", err);
       next(err);
     });
@@ -88,8 +89,12 @@ router.delete("/:lodgingId", (req, res, next) => {
 
 //update lodging by id
 
-router.put("/:lodgingId", (req, res, next) => {
+router.put("/:lodgingId", uploader.single("images"), (req, res, next) => {
   const { lodgingId } = req.params;
+  let file = req.file;
+  if (file) {
+    req.body.images = file?.path;
+  }
   LodgingModel.findByIdAndUpdate(lodgingId, req.body, { new: true })
     .then((updatedLodging) => {
       res.status(200).json(updatedLodging);
